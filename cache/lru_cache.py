@@ -1,4 +1,6 @@
 from cache.node import Node
+import time
+
 class LRUCache:
     def __init__(self,capacity: int):
       self.capacity = capacity
@@ -37,6 +39,10 @@ class LRUCache:
       
       self.hits += 1
       node = self.cache[key]
+      
+        # TTL check
+      if node.expiry and time.time() > node.expiry:
+        print("CACHE EXPIRED")
 
       # detach node from current position (node object reference still exists)
       self._remove(node)
@@ -48,7 +54,7 @@ class LRUCache:
 
     def put(self, key:int, value:int):
    
-   #cache hit
+     #cache hit
       if key in self.cache:
          node = self.cache[key]
          node.value = value
@@ -71,7 +77,7 @@ class LRUCache:
 
     def get_metrics(self):
       total = self.hits + self.misses
-      hit_rate = self.hits / total
+      hit_rate = self.hits / total if total>0 else 0
       return{
         "hits": self.hits,
         "misses" : self.misses,
