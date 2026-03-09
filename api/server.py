@@ -10,3 +10,7 @@ def get_data(key: int):
     value = service.get_data(key)
 
     return { "key": key, "value": value}
+
+@app.get("/metrics")
+def metrics():
+    return service.cache.get_metrics()

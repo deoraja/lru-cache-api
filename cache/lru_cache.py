@@ -40,10 +40,6 @@ class LRUCache:
       self.hits += 1
       node = self.cache[key]
       
-        # TTL check
-      if node.expiry and time.time() > node.expiry:
-        print("CACHE EXPIRED")
-
       # detach node from current position (node object reference still exists)
       self._remove(node)
 
