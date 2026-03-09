@@ -1,5 +1,5 @@
 from cache.lru_cache import LRUCache
-from database.db import FaksDatabase
+from database.postgres_db import PostgresDatabase
 
 
 class CacheService:
@@ -10,7 +10,7 @@ class CacheService:
         self.cache = LRUCache(3)
 
         #databse connection simultation
-        self.db = FaksDatabase()
+        self.db = PostgresDatabase()
 
     def get_data(self,key):
 
