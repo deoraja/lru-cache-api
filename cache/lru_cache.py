@@ -1,5 +1,4 @@
 from cache.node import Node
-import time
 
 class LRUCache:
     def __init__(self,capacity: int):

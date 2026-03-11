@@ -1,6 +1,8 @@
 from cache.lru_cache import LRUCache
 from database.postgres_db import PostgresDatabase
+import logging
 
+logger = logging.getLogger("cache_service")
 
 class CacheService:
 
@@ -18,14 +20,15 @@ class CacheService:
         value = self.cache.get(key)
 
         if value != -1:
-            print("CACHE HIT")
+            logger.info(f"CACHE HIT: {key}")
             return value
         #cache miss
-        print("CACHE MISS -> fetching from DB")
+        logger.info(f"CACHE MISS: {key} | fetching from DB")
         
         value = self.db.get(key)
 
         if value is not None:
+            logger.info(f"DB FETCH: {key}")
             self.cache.put(key, value)
 
         return value
