@@ -23,7 +23,7 @@ class PostgresDatabase:
     def get(self, key):
 
         self.cursor.execute(
-            "SELECT name FROM fruits WHERE id = %s",
+            "SELECT name FROM Users WHERE id = %s",
             (key,)
         )
 

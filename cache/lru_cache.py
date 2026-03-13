@@ -34,7 +34,7 @@ class LRUCache:
     def get(self, key: int):
       if key not in self.cache:
        self.misses += 1
-       return -1
+       return None
       
       self.hits += 1
       node = self.cache[key]
@@ -53,20 +53,17 @@ class LRUCache:
       if key in self.cache:
          node = self.cache[key]
          node.value = value
-
          self._remove(node)
          self._insert(node)
-
+         return
       #cache miss onwards
-      else:
-         if len(self.cache) >= self.capacity:  
+      if len(self.cache) >= self.capacity:  
           #remove LRU node
-          lru = self.tail.prev
-          self._remove(lru)
-          del self.cache[lru.key]
+         lru = self.tail.prev
+         self._remove(lru)
+         self.cache.pop(lru.key, None) 
 
       new_node = Node(key, value)
-
       self.cache[key] = new_node
       self._insert(new_node)
 
@@ -76,7 +73,7 @@ class LRUCache:
       return{
         "hits": self.hits,
         "misses" : self.misses,
-        "hit_rate": hit_rate 
+        "hit_rate": round(hit_rate,3) 
       }
     
 
